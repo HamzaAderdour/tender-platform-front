@@ -1,59 +1,58 @@
-# TenderPlatformFront
+# 🏛️ Tender Platform - Front End
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.2.
+Plateforme de gestion des marchés publics (Appels d'offres) basée sur une architecture Microservices.
+Ce repository contient le Front-End réalisé en **Angular 17+**.
 
-## Development server
+---
 
-To start a local development server, run:
+## 📅 Roadmap du Projet (Challenge 4 Jours)
 
-```bash
-ng serve
-```
+- [x] **Jour 1 : Socle Technique & Authentification** (✅ Terminé)
+- [ ] **Jour 2 : Module OWNER** (Création et gestion des appels d'offres)
+- [ ] **Jour 3 : Module SUPPLIER** (Soumission des dossiers & Upload de fichiers)
+- [ ] **Jour 4 : Intelligence Artificielle & Admin** (Intégration RAG & Dashboard)
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## 📑 Rapport d'Avancement : Jour 1 (29 Janvier 2026)
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+**Statut :** ✅ Socle Technique & Authentification Opérationnels
 
-```bash
-ng generate component component-name
-```
+### 1. Ce qui a été réalisé
+Transformation d'une coquille vide en application sécurisée avec simulation serveur.
+- **Authentification Simulée (Mocking) :** Imitation du comportement serveur (latence, token JWT fictif).
+- **Sécurité :** Mise en place des Guards (`CanActivateFn`) et Interceptors.
+- **UI :** Intégration de TailwindCSS et design du Login/Navbar.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### 2. Architecture & Conventions
+Approche **Standalone Components**.
+Arborescence simplifiée :
+- `src/app/core/services/auth.ts` : Service d'Auth (Mocké)
+- `src/app/core/guards/auth-guard.ts` : Protection des routes
+- `src/app/features/auth/login/login.ts` : Composant Login
+- `src/app/app.ts` : Composant Racine
 
-```bash
-ng generate --help
-```
+### 3. "Best-Of" des Bugs Résolus
+1.  **Crash TailwindCSS (v4) :** Rétrogradation vers la v3.4 stable pour compatibilité Angular.
+2.  **Course Asynchrone :** Utilisation de `switchMap` pour garantir le stockage du token avant la redirection.
+3.  **Imports Standalone :** Ajout systématique de `CommonModule` et `ReactiveFormsModule`.
 
-## Building
+### 4. Guide du Développeur (Mocking)
+Le backend n'étant pas prêt, le service `auth.ts` utilise `of().pipe(delay(500))` pour simuler l'API.
+**Comptes de test :**
+- **Admin :** `admin@test.com` / `1234`
+- **Owner :** `owner@test.com` / `1234` (À venir)
+- **Supplier :** `supplier@test.com` / `1234` (À venir)
 
-To build the project run:
+---
 
-```bash
-ng build
-```
+## 🚀 Comment lancer le projet
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+1.  **Installation :**
+    ```bash
+    npm install
+    ```
+2.  **Démarrage :**
+    ```bash
+    ng serve -o
+    ```
