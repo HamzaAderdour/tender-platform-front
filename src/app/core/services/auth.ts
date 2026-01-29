@@ -53,25 +53,32 @@ export class AuthService {
     // ---------------------------------------------------------
     console.warn('⚠️ AUTH SERVICE : Mode Mock Activé');
     
-    // Simulation d'appel réseau (500ms)
     return of(true).pipe(
       delay(500),
-      // 👇 C'est ici la correction : switchMap permet de décider si on renvoie un SUCCÈS ou une ERREUR
       switchMap(() => {
+        // 👇 LOGIQUE DE RÔLES MISE À JOUR
+        let role = '';
+        let isValid = false;
+
+        // Cas 1 : Admin
         if (email === 'admin@test.com' && pass === '1234') {
-          // SUCCÈS : On construit la réponse
+          role = 'ADMIN';
+          isValid = true;
+        } 
+        // Cas 2 : Owner (Nouveau !)
+        else if (email === 'owner@immo.com' && pass === '1234') {
+          role = 'OWNER';
+          isValid = true;
+        }
+
+        if (isValid) {
           const mockResponse: AuthResponse = {
-            token: 'fake-jwt-token-xyz-123',
-            user: { id: 1, email: email, role: 'ADMIN' }
+            token: 'fake-jwt-token-' + role, // On met le rôle dans le faux token
+            user: { id: 1, email: email, role: role }
           };
-
-          // On sauvegarde la session (Effet de bord)
           this.saveSession(mockResponse);
-
-          // IMPORTANT : On retourne l'objet mocké au composant
           return of(mockResponse);
         } else {
-          // ÉCHEC : On retourne une erreur Observable
           return throwError(() => new Error('Identifiants incorrects'));
         }
       })

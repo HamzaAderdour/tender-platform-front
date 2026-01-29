@@ -1,22 +1,38 @@
 import { Routes } from '@angular/router';
+
+// 1. Tes imports existants
 import { LoginComponent } from './features/auth/login/login';
 import { DashboardComponent } from './features/admin/dashboard/dashboard';
 import { authGuard } from './core/guards/auth-guard';
 
+// 2. Les NOUVEAUX imports pour le module Owner
+import { OwnerDashboardComponent } from './features/owner/owner-dashboard/owner-dashboard';
+import { CreateTenderComponent } from './features/owner/create-tender/create-tender';
+
 export const routes: Routes = [
-  // Route publique
+  // --- Routes Publiques ---
   { path: 'login', component: LoginComponent },
   
-  // Route protégée par le Guard
+  // --- Routes Admin ---
   { 
     path: 'dashboard', 
     component: DashboardComponent, 
     canActivate: [authGuard] 
   },
 
-  // Redirection par défaut (Le Guard renverra vers Login si pas connecté)
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-  
-  // Wildcard (optionnel, pour les 404)
-  { path: '**', redirectTo: 'dashboard' }
+  // --- NOUVEAU : Routes Owner ---
+  { 
+    path: 'owner/dashboard', 
+    component: OwnerDashboardComponent, 
+    canActivate: [authGuard] // Protégé aussi !
+  },
+  { 
+    path: 'owner/create', 
+    component: CreateTenderComponent, 
+    canActivate: [authGuard] 
+  },
+
+  // --- Redirections ---
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, // Par défaut vers Admin pour l'instant
+  { path: '**', redirectTo: 'dashboard' } // Erreur 404 -> vers Dashboard
 ];
